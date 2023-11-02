@@ -1,0 +1,16 @@
+.container {
+    padding: 10px;
+}
+
+.selected {
+    background: #adb5bd;
+}
+
+li input {
+    margin-left: 5px;
+    background: white;
+    outline: none;
+    border: 1px solid #868e96;
+    height: 25px;
+    font-size: 15px;
+}
