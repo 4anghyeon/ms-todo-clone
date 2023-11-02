@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './CategoryButtonContainer.module.css';
+import style from './css/CategoryButtonContainer.module.css';
 import {uuidv4} from '../../helpers/util';
 
 class Group {
