@@ -4,7 +4,7 @@ import CategoryList from './CategoryList';
 import ContextMenu from './ContextMenu';
 
 // MainContainer -> CategoryMainContainer -> CategoryListContainer
-const CategoryListContainer = ({categoryList, setCategoryList}) => {
+const CategoryListContainer = ({categoryList, setCategoryMap, setSelectedListId}) => {
   const [showContextMenu, setShowContextMenu] = useState(false);
 
   // 컨텍스트 메뉴가 표시될 정보를 담은 state
@@ -14,20 +14,24 @@ const CategoryListContainer = ({categoryList, setCategoryList}) => {
     <>
       {showContextMenu && (
         <ContextMenu
-          setCategoryList={setCategoryList}
+          setCategoryMap={setCategoryMap}
           setShowContextMenu={setShowContextMenu}
           contextInfo={contextInfo}
         />
       )}
       <div className={style.container}>
-        {categoryList.map(category => {
+        {[...categoryList.entries()].map(entry => {
+          let key = entry[0];
+          let category = entry[1];
           return (
             <CategoryList
-              key={category.id}
+              key={key}
+              listId={key}
               category={category}
-              setCategoryList={setCategoryList}
+              setCategoryMap={setCategoryMap}
               setShowContextMenu={setShowContextMenu}
               setContextInfo={setContextInfo}
+              setSelectedListId={setSelectedListId}
             />
           );
         })}

@@ -1,0 +1,58 @@
+.container {
+    width: 75%;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container h1 {
+    margin-left: 20px;
+    color: #ffff;
+}
+
+.container input {
+    margin: 10px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 20px;
+    border-color: transparent;
+    background: #5466AE;
+    color: white;
+}
+
+.container input::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
+.container input::-ms-input-placeholder { /* Edge 12 -18 */
+    color: white;
+}
+
+.todoContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.notDoneContainer {
+    justify-content: start;
+}
+
+.isDoneContainer span {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    text-decoration: line-through;
+}
+
+.isDoneHeader {
+    margin: 10px 0 5px 10px;
+    background: #5466AE;
+    color: white;
+    border-radius: 10px;
+    width: fit-content;
+    font-size: 12px;
+    padding: 10px;
+}

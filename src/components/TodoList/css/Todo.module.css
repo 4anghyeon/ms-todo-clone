@@ -1,0 +1,36 @@
+.todo {
+    display: flex;
+    align-items: center;
+    background: white;
+    height: 30px;
+    font-size: 20px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    border-color: transparent;
+}
+
+.circle {
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #5466AE;
+    border-radius: 25px;
+}
+
+.checkCircle {
+    background: white;
+    color: white;
+}
+
+.doneCircle {
+    background: #5466AE;
+}
+
+.doneCircle::after {
+    content: "✔";
+    text-decoration: none !important;
+}
