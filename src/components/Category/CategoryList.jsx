@@ -5,16 +5,22 @@ import style from './css/CategoryList.module.css';
 const List = ({listId, category, handleChange, handleBlur, handleKeyDown}) => {
   // 일반 텍스트와 input창을 동시에 두고 편집 여부에 따라 번갈아 보이게 함
   return (
-    <React.Fragment>
+    <>
       {category.isEdit ? (
         <div>
-          📋
+          <span className={style.icon}>📋</span>
           <input id={`input_${listId}`} onChange={handleChange} onBlur={handleBlur} onKeyDown={handleKeyDown} />
         </div>
       ) : (
-        <div className="list-item"> 📋 {category.name}</div>
+        <div className={`${style.listItem}`}>
+          <span>
+            {' '}
+            <span className={style.icon}>📋</span> {category.name}
+          </span>
+          <span className={style.count}>{category.todoList.length || ''}</span>
+        </div>
       )}
-    </React.Fragment>
+    </>
   );
 };
 
@@ -24,11 +30,13 @@ const Group = ({listId, group, category, handleChange, handleBlur, handleKeyDown
     <React.Fragment>
       {category.isEdit ? (
         <div>
-          📋
+          <span className={style.icon}>📂</span>
           <input id={`input_${listId}`} onChange={handleChange} onBlur={handleBlur} onKeyDown={handleKeyDown} />
         </div>
       ) : (
-        <div className="list-item">📂 {category.name}</div>
+        <div>
+          <span className={style.icon}>📂</span> {category.name}
+        </div>
       )}
     </React.Fragment>
   );
@@ -39,11 +47,10 @@ const CategoryList = ({listId, category, setCategoryMap, setShowContextMenu, set
   // 선택된 요소에 클래스 추가
   const addSelectClass = target => {
     document.querySelectorAll('.list-item').forEach(elem => elem.classList.remove(style.selected));
-    if ([...target.classList].includes('list-item')) {
-      if (target.tagName !== 'LI') target.parentNode.classList.add(style.selected);
-      else target.classList.add(style.selected);
-      setSelectedListId(listId);
-    }
+    if (target.tagName !== 'LI') {
+      target.closest('.list-item').classList.add(style.selected);
+    } else target.classList.add(style.selected);
+    setSelectedListId(listId);
   };
 
   const handleBlur = event => {
