@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './css/Todo.module.css';
 
-const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap}) => {
+const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowContextMenu, setContextInfo}) => {
   const handleClickCheckCircle = () => {
     let find = categoryMap.get(selectedListId);
     if (find) {
@@ -21,8 +21,15 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap}) => {
     }
   };
 
+  // 컨텍스트 메뉴 오픈
+  const handleRightClick = event => {
+    event.preventDefault();
+    setShowContextMenu(true);
+    setContextInfo({listId: selectedListId, todo: todo, x: event.clientX, y: event.clientY});
+  };
+
   return (
-    <div className={style.todo}>
+    <div className={style.todo} onContextMenu={handleRightClick}>
       <div
         className={`${style.checkCircle} ${style.circle} ${todo.isDone && style.doneCircle}`}
         onClick={handleClickCheckCircle}

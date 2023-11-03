@@ -1,10 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import styles from './css/TodoListContainer.module.css';
 import TodoRow from './TodoRow';
 import {Todo} from '../../helpers/util';
+import TodoContextMenu from './TodoContextMenu';
 
 const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap}) => {
-  const selectedTodo = categoryMap.get(selectedListId);
+  const [showToDoListContextMenu, setShowToDoListContextMenu] = useState(false);
+  const [contextInfo, setContextInfo] = useState({x: 0, y: 0});
+
+  const selectedTodoList = categoryMap.get(selectedListId);
 
   const handleKeydown = event => {
     if (event.nativeEvent.isComposing) {
@@ -14,8 +18,8 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap}) => {
     if (event.key === 'Enter') {
       let value = event.target.value;
       if (value === '') return;
-      let newTodoList = selectedTodo.todoList;
-      newTodoList.push(new Todo(value, newTodoList[newTodoList.length - 1].index + 1, false));
+      let newTodoList = selectedTodoList.todoList;
+      newTodoList.push(new Todo(value, (newTodoList[newTodoList.length - 1]?.index || 0) + 1, false));
 
       let newMap = new Map(categoryMap);
       newMap.get(selectedListId).todoList = newTodoList;
@@ -25,8 +29,8 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap}) => {
     }
   };
 
-  let todoList = selectedTodo?.todoList.filter(t => !t.isDone);
-  let isDoneTodoList = selectedTodo?.todoList.filter(t => t.isDone);
+  let todoList = selectedTodoList?.todoList.filter(t => !t.isDone);
+  let isDoneTodoList = selectedTodoList?.todoList.filter(t => t.isDone);
 
   const renderTodoList = list => {
     return list.map(todo => {
@@ -37,6 +41,8 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap}) => {
           todo={todo}
           categoryMap={categoryMap}
           setCategoryMap={setCategoryMap}
+          setShowContextMenu={setShowToDoListContextMenu}
+          setContextInfo={setContextInfo}
         />
       );
     });
@@ -47,9 +53,17 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap}) => {
       {selectedListId !== 0 && (
         <>
           <header>
-            <h1>{selectedTodo.name}</h1>
+            <h1>{selectedTodoList.name}</h1>
           </header>
           <article className={styles.todoContainer}>
+            {showToDoListContextMenu && (
+              <TodoContextMenu
+                selectedListId={selectedListId}
+                setCategoryMap={setCategoryMap}
+                setShowContextMenu={setShowToDoListContextMenu}
+                contextInfo={contextInfo}
+              />
+            )}
             <section className={`${styles.notDoneContainer}`}>{renderTodoList(todoList)}</section>
             {isDoneTodoList.length > 0 && (
               <>

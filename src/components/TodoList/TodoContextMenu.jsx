@@ -1,9 +1,7 @@
-import style from './css/CategoryListContainer.module.css';
+import style from './css/TodoListContainer.module.css';
 import React from 'react';
 
-const ContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu, setSelectedListId}) => {
-  let listId = contextInfo.listId;
-
+const TodoContextMenu = ({selectedListId, setCategoryMap, contextInfo, setShowContextMenu}) => {
   // context menu 바깥쪽 클릭할 경우 닫힘
   const onClickShadow = event => {
     if ([...event.target.classList].includes('contextShadow')) setShowContextMenu(false);
@@ -22,7 +20,7 @@ const ContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu, setSelect
         element.isEdit = false;
       }
 
-      let find = newMap.get(listId);
+      let find = newMap.get(selectedListId);
 
       if (find) {
         find.isEdit = true;
@@ -30,7 +28,7 @@ const ContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu, setSelect
 
         // input이 표시된 후 focus해야 하기 때문에 어쩔 수 없이 setTimeout걸음
         setTimeout(() => {
-          const inputElem = document.getElementById(`input_${listId}`);
+          const inputElem = document.getElementById(`input_${selectedListId}`);
           inputElem.value = find.name;
           inputElem.focus();
         });
@@ -40,12 +38,12 @@ const ContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu, setSelect
     setShowContextMenu(false);
   };
 
-  const onClickDeleteCategory = () => {
-    if (window.confirm('해당 목록이 영구적으로 삭제됩니다.')) {
+  const onClickDeleteTodo = () => {
+    if (window.confirm('해당 할 일이 영구적으로 삭제됩니다.')) {
       setCategoryMap(prev => {
         let newMap = new Map(prev);
-        newMap.delete(listId);
-        setSelectedListId(0);
+        let todoList = newMap.get(selectedListId).todoList;
+        newMap.get(selectedListId).todoList = todoList.filter(t => t.index !== contextInfo.todo.index);
         return newMap;
       });
     }
@@ -55,11 +53,12 @@ const ContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu, setSelect
   return (
     <div className={style.contextMenuShadow + ' contextShadow'} onClick={onClickShadow} onContextMenu={onClickContext}>
       <ul className={style.contextMenu} style={{top: contextInfo.y, left: contextInfo.x}}>
-        <li onClick={onClickChangeName}>🔖 이름 변경</li>
-        <li onClick={onClickDeleteCategory}>🗑️ 삭제</li>
+        <li onClick={onClickChangeName}>📝 내용 변경</li>
+        <li>⭐️ 중요로 표시</li>
+        <li onClick={onClickDeleteTodo}>🗑️ 삭제</li>
       </ul>
     </div>
   );
 };
 
-export default ContextMenu;
+export default TodoContextMenu;

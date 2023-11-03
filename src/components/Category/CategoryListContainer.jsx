@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
 import style from './css/CategoryListContainer.module.css';
 import CategoryList from './CategoryList';
-import ContextMenu from './ContextMenu';
+import CategoryContextMenu from './CategoryContextMenu';
 
 // MainContainer -> CategoryMainContainer -> CategoryListContainer
 const CategoryListContainer = ({categoryList, setCategoryMap, setSelectedListId}) => {
-  const [showContextMenu, setShowContextMenu] = useState(false);
+  const [showCategoryContextMenu, setShowCategoryContextMenu] = useState(false);
 
   // 컨텍스트 메뉴가 표시될 정보를 담은 state
   const [contextInfo, setContextInfo] = useState({x: 0, y: 0});
 
   return (
     <>
-      {showContextMenu && (
-        <ContextMenu
+      {showCategoryContextMenu && (
+        <CategoryContextMenu
           setCategoryMap={setCategoryMap}
-          setShowContextMenu={setShowContextMenu}
+          setShowContextMenu={setShowCategoryContextMenu}
           setSelectedListId={setSelectedListId}
           contextInfo={contextInfo}
         />
@@ -30,7 +30,7 @@ const CategoryListContainer = ({categoryList, setCategoryMap, setSelectedListId}
               listId={key}
               category={category}
               setCategoryMap={setCategoryMap}
-              setShowContextMenu={setShowContextMenu}
+              setShowContextMenu={setShowCategoryContextMenu}
               setContextInfo={setContextInfo}
               setSelectedListId={setSelectedListId}
             />
