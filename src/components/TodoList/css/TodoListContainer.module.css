@@ -56,24 +56,3 @@
     font-size: 12px;
     padding: 10px;
 }
-
-.contextMenu {
-    position: absolute;
-    padding: 5px;
-    border-radius: 10px;
-    background: rgba(206, 212, 218, 0.84);
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-}
-
-.contextMenu li {
-    margin: 5px;
-    cursor: pointer;
-}
-
-.contextMenuShadow {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-}

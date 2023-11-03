@@ -1,17 +1,8 @@
 import style from './css/TodoListContainer.module.css';
 import React from 'react';
+import ContextMenu from '../Common/ContextMenu';
 
 const TodoContextMenu = ({selectedListId, setCategoryMap, contextInfo, setShowContextMenu}) => {
-  // context menu 바깥쪽 클릭할 경우 닫힘
-  const onClickShadow = event => {
-    if ([...event.target.classList].includes('contextShadow')) setShowContextMenu(false);
-  };
-
-  const onClickContext = event => {
-    event.preventDefault();
-    setShowContextMenu(false);
-  };
-
   const onClickChangeName = () => {
     // 이름 변경을 하면 해당 목록 밑에 숨겨져 있던 input이 드러나게 한다.
     setCategoryMap(prev => {
@@ -50,13 +41,14 @@ const TodoContextMenu = ({selectedListId, setCategoryMap, contextInfo, setShowCo
     setShowContextMenu(false);
   };
 
+  const menuList = [
+    ['⭐️ 중요로 표시', onClickChangeName],
+    ['🗑️ 삭제', onClickDeleteTodo],
+  ];
+
   return (
-    <div className={style.contextMenuShadow + ' contextShadow'} onClick={onClickShadow} onContextMenu={onClickContext}>
-      <ul className={style.contextMenu} style={{top: contextInfo.y, left: contextInfo.x}}>
-        <li onClick={onClickChangeName}>📝 내용 변경</li>
-        <li>⭐️ 중요로 표시</li>
-        <li onClick={onClickDeleteTodo}>🗑️ 삭제</li>
-      </ul>
+    <div className={style.contextMenuShadow + ' contextShadow'}>
+      <ContextMenu setShowContextMenu={setShowContextMenu} contextInfo={contextInfo} menuList={menuList} />
     </div>
   );
 };

@@ -1,0 +1,24 @@
+.contextMenu {
+    position: absolute;
+    border-radius: 10px;
+    background: rgba(206, 212, 218, 0.95);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.contextMenu li {
+    padding: 5px 15px 5px 15px;
+    cursor: pointer;
+}
+
+.contextMenuShadow {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+
+.contextMenu li:hover {
+    background: #1A83F0;
+    color: white;
+}
