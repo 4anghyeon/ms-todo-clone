@@ -1,7 +1,9 @@
 import style from './css/CategoryListContainer.module.css';
 import React from 'react';
 
-const ContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu}) => {
+const ContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu, setSelectedListId}) => {
+  let listId = contextInfo.listId;
+
   // context menu 바깥쪽 클릭할 경우 닫힘
   const onClickShadow = event => {
     if ([...event.target.classList].includes('contextShadow')) setShowContextMenu(false);
@@ -13,11 +15,8 @@ const ContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu}) => {
   };
 
   const onClickChangeName = () => {
-    let listId = contextInfo.listId;
-
     // 이름 변경을 하면 해당 목록 밑에 숨겨져 있던 input이 드러나게 한다.
     setCategoryMap(prev => {
-      console.log(prev);
       let newMap = new Map(prev);
       for (const element of newMap.values()) {
         element.isEdit = false;
@@ -36,9 +35,20 @@ const ContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu}) => {
           inputElem.focus();
         });
       }
-      console.log(newMap);
       return newMap;
     });
+    setShowContextMenu(false);
+  };
+
+  const onClickDeleteCategory = () => {
+    if (window.confirm('해당 목록이 영구적으로 삭제됩니다.')) {
+      setCategoryMap(prev => {
+        let newMap = new Map(prev);
+        newMap.delete(listId);
+        setSelectedListId(0);
+        return newMap;
+      });
+    }
     setShowContextMenu(false);
   };
 
@@ -46,7 +56,7 @@ const ContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu}) => {
     <div className={style.contextMenuShadow + ' contextShadow'} onClick={onClickShadow} onContextMenu={onClickContext}>
       <ul className={style.contextMenu} style={{top: contextInfo.y, left: contextInfo.x}}>
         <li onClick={onClickChangeName}>🔖 이름 변경</li>
-        <li>🗑️ 삭제</li>
+        <li onClick={onClickDeleteCategory}>🗑️ 삭제</li>
       </ul>
     </div>
   );

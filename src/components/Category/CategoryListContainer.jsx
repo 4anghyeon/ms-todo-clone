@@ -16,6 +16,7 @@ const CategoryListContainer = ({categoryList, setCategoryMap, setSelectedListId}
         <ContextMenu
           setCategoryMap={setCategoryMap}
           setShowContextMenu={setShowContextMenu}
+          setSelectedListId={setSelectedListId}
           contextInfo={contextInfo}
         />
       )}
