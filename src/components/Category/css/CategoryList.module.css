@@ -2,10 +2,6 @@
     padding: 10px 20px 10px 20px;
 }
 
-.selected {
-    background: #adb5bd;
-}
-
 li input {
     margin-left: 5px;
     background: white;
@@ -13,15 +9,6 @@ li input {
     border: 1px solid #868e96;
     height: 25px;
     font-size: 15px;
-}
-
-.listItem {
-    display: flex;
-    justify-content: space-between;
-}
-
-.count {
-    color: #868e96;
 }
 
 .icon {

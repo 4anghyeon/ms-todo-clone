@@ -16,6 +16,13 @@
     align-items: center;
 }
 
+.todoContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: start !important;
+    align-items: start !important;
+}
+
 .circle {
     display: flex;
     justify-content: center;
@@ -44,7 +51,7 @@
 
 .star::after {
     content: "✩";
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     color: grey;
 }
 
@@ -52,4 +59,9 @@
     content: "★";
     font-size: 1.5rem;
     color: #5C70BE;
+}
+
+.subText {
+    font-size: 12px;
+    color: #767678;
 }

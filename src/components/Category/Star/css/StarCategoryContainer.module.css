@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+}
+
+.container div {
+    display: flex;
+    align-items: center;
+}
+
+.container li {
+    padding: 10px 20px 10px 20px;
+}
+
+.spaceBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon {
+    margin-right: 5px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #AC395D;
+}
+
+.container hr {
+    border-color: #dee2e6;
+    border-width: 0.05rem;
+    margin: 5px 0 5px 0;
+}

@@ -5,7 +5,8 @@ export const uuidv4 = () => {
 };
 
 export class Todo {
-  constructor(content, index, star) {
+  constructor(categoryId, content, index, star) {
+    this.parentId = categoryId;
     this.content = content;
     this.index = index;
     this.isDone = false;
@@ -15,10 +16,9 @@ export class Todo {
 
 export class Category {
   constructor(name, group) {
-    this.id = uuidv4();
     this.group = group;
     this.name = name;
     this.isEdit = false;
-    this.todoList = [new Todo(Math.random(), 0, false)];
+    this.todoList = [];
   }
 }

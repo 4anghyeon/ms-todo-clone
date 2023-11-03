@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import style from './css/CategoryListContainer.module.css';
-import CategoryList from './CategoryList';
+import CategoryContainer from './CategoryContainer';
 import CategoryContextMenu from './CategoryContextMenu';
 
 // MainContainer -> CategoryMainContainer -> CategoryListContainer
@@ -25,9 +25,10 @@ const CategoryListContainer = ({categoryList, setCategoryMap, setSelectedListId}
           let key = entry[0];
           let category = entry[1];
           return (
-            <CategoryList
+            <CategoryContainer
               key={key}
               listId={key}
+              categoryList={categoryList}
               category={category}
               setCategoryMap={setCategoryMap}
               setShowContextMenu={setShowCategoryContextMenu}

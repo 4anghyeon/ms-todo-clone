@@ -45,6 +45,9 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
+}
+
+.isDoneContainer span:not(span:last-child) {
     text-decoration: line-through;
 }
 

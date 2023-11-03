@@ -1,9 +1,9 @@
 import React from 'react';
 import style from './css/CategoryList.module.css';
+import common from './css/CategoryCommon.module.css';
 
 // 단순 목록 아이템
 const List = ({listId, category, handleChange, handleBlur, handleKeyDown}) => {
-  // 일반 텍스트와 input창을 동시에 두고 편집 여부에 따라 번갈아 보이게 함
   return (
     <>
       {category.isEdit ? (
@@ -12,12 +12,11 @@ const List = ({listId, category, handleChange, handleBlur, handleKeyDown}) => {
           <input id={`input_${listId}`} onChange={handleChange} onBlur={handleBlur} onKeyDown={handleKeyDown} />
         </div>
       ) : (
-        <div className={`${style.listItem}`}>
-          <span>
-            {' '}
+        <div className={`${common.listItem}`}>
+          <div>
             <span className={style.icon}>📋</span> {category.name}
-          </span>
-          <span className={style.count}>{category.todoList.length || ''}</span>
+          </div>
+          <span className={common.count}>{category.todoList.length || ''}</span>
         </div>
       )}
     </>
@@ -42,14 +41,21 @@ const Group = ({listId, group, category, handleChange, handleBlur, handleKeyDown
   );
 };
 
-// MainContainer -> CategoryMainContainer -> CategoryListContainer -> CategoryList
-const CategoryList = ({listId, category, setCategoryMap, setShowContextMenu, setContextInfo, setSelectedListId}) => {
+// MainContainer -> CategoryMainContainer -> CategoryListContainer -> CategoryContainer
+const CategoryContainer = ({
+  listId,
+  category,
+  setCategoryMap,
+  setShowContextMenu,
+  setContextInfo,
+  setSelectedListId,
+}) => {
   // 선택된 요소에 클래스 추가
   const addSelectClass = target => {
-    document.querySelectorAll('.list-item').forEach(elem => elem.classList.remove(style.selected));
+    document.querySelectorAll('.list-item').forEach(elem => elem.classList.remove(common.selected));
     if (target.tagName !== 'LI') {
-      target.closest('.list-item').classList.add(style.selected);
-    } else target.classList.add(style.selected);
+      target.closest('.list-item').classList.add(common.selected);
+    } else target.classList.add(common.selected);
     setSelectedListId(listId);
   };
 
@@ -96,4 +102,4 @@ const CategoryList = ({listId, category, setCategoryMap, setShowContextMenu, set
   );
 };
 
-export default CategoryList;
+export default CategoryContainer;

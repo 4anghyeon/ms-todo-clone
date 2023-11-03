@@ -20,3 +20,9 @@ li {
     font-family: 'IBM Plex Sans KR';
     src: url('./assets/font/IBM Plex Sans KR/IBMPlexSansKR-Regular.ttf') format('truetype');
 }
+
+@font-face {
+    font-family: 'IBM Plex Sans KR';
+    font-weight: bold;
+    src: url('./assets/font/IBM Plex Sans KR/IBMPlexSansKR-Bold.ttf') format('truetype');
+}

@@ -1,0 +1,12 @@
+.selected {
+    background: #adb5bd;
+}
+
+.count {
+    color: #868e96;
+}
+
+.listItem {
+    display: flex;
+    justify-content: space-between;
+}

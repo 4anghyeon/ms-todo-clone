@@ -46,8 +46,9 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
           className={`${style.checkCircle} ${style.circle} ${todo.isDone && style.doneCircle}`}
           onClick={handleClickCheckCircle}
         ></div>
-        <div>
+        <div className={style.todoContent}>
           <span>{todo.content}</span>
+          {selectedListId === 'star' && <span className={style.subText}>{categoryMap.get(todo.parentId).name}</span>}
         </div>
       </div>
       <div onClick={handleClickStar} className={`${todo.star ? style.stared : style.star}`}></div>
