@@ -2,13 +2,17 @@ import React from 'react';
 import style from './css/Todo.module.css';
 
 const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowContextMenu, setContextInfo}) => {
-  const handleClickCheckCircle = () => {
+  const toggleTodoAttribute = changeItem => {
     let find = categoryMap.get(selectedListId);
+    let obj = {};
+    obj[changeItem] = null;
+
     if (find) {
       let findTodoIndex = find.todoList.findIndex(t => t.index === todo.index);
       if (findTodoIndex !== -1) {
         let findTodo = find.todoList[findTodoIndex];
-        let newTodo = {...findTodo, isDone: !findTodo.isDone, test: true};
+        obj[changeItem] = !findTodo[changeItem];
+        let newTodo = {...findTodo, ...obj};
 
         // todoList의 todo를 새 todo로 교체!
         let newTodoList = [...find.todoList];
@@ -20,6 +24,13 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
       }
     }
   };
+  const handleClickCheckCircle = () => {
+    toggleTodoAttribute('isDone');
+  };
+
+  const handleClickStar = event => {
+    toggleTodoAttribute('star');
+  };
 
   // 컨텍스트 메뉴 오픈
   const handleRightClick = event => {
@@ -30,13 +41,16 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
 
   return (
     <div className={style.todo} onContextMenu={handleRightClick}>
-      <div
-        className={`${style.checkCircle} ${style.circle} ${todo.isDone && style.doneCircle}`}
-        onClick={handleClickCheckCircle}
-      ></div>
       <div>
-        <span>{todo.content}</span>
+        <div
+          className={`${style.checkCircle} ${style.circle} ${todo.isDone && style.doneCircle}`}
+          onClick={handleClickCheckCircle}
+        ></div>
+        <div>
+          <span>{todo.content}</span>
+        </div>
       </div>
+      <div onClick={handleClickStar} className={`${todo.star ? style.stared : style.star}`}></div>
     </div>
   );
 };

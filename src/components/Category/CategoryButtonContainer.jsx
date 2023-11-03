@@ -30,8 +30,8 @@ const CategoryButtonContainer = ({setCategoryMap}) => {
 
   return (
     <div className={style.container}>
-      <button onClick={handleAttButton.bind(null, false)}>+ 새 목록</button>
-      <button onClick={handleAttButton.bind(null, true)}>새 그룹</button>
+      <button onClick={handleAttButton.bind(null, false)}>➕ 새 목록</button>
+      <button onClick={handleAttButton.bind(null, true)}>🗂️ 새 그룹</button>
     </div>
   );
 };
