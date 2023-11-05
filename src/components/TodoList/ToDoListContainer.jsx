@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import styles from './css/TodoListContainer.module.css';
-import TodoRow from './TodoRow';
-import {Category, chooseBackground, Todo} from '../../helpers/util';
+import ToDoRow from './ToDoRow';
+import {chooseBackground} from '../../helpers/util';
 import TodoContextMenu from './TodoContextMenu';
+import {Category, IMPORTANT_HEADER_ID, IMPORTANT_ID, SEARCH_ID, Todo} from '../../helpers/common';
 
 const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchState}) => {
   const [showToDoListContextMenu, setShowToDoListContextMenu] = useState(false);
@@ -10,7 +11,9 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchS
 
   let selectedTodoList = categoryMap.get(selectedListId);
 
+  // 작업 입력 이벤트
   const handleKeydown = event => {
+    // 한글 입력시 두번 이벤트 발생 감지
     if (event.nativeEvent.isComposing) {
       return;
     }
@@ -31,29 +34,31 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchS
 
   let todoList = [];
   let isDoneTodoList = [];
-  console.log(searchState);
+
   if (searchState.isFocus && !searchState.isEmpty) {
+    // 검색창에 포커스가 있으면서, 검색어가 있으면 검색 결과를 보여준다.
     selectedTodoList = new Category('검색 결과', null);
-    console.log('here');
     for (const category of categoryMap.values()) {
       selectedTodoList.todoList = [
         ...selectedTodoList.todoList,
         ...category.todoList.filter(t => t.content.includes(searchState.keyword)),
       ];
     }
-  } else if (selectedListId === 'star') {
+  } else if (selectedListId === IMPORTANT_ID) {
+    // 중요 메뉴 선택시 중요로 선택한 목록만 보여준다.
     selectedTodoList = new Category('중요', null);
     for (const category of categoryMap.values()) {
       selectedTodoList.todoList = [...selectedTodoList.todoList, ...category.todoList.filter(t => t.star)];
     }
   }
+
   todoList = selectedTodoList?.todoList.filter(t => !t.isDone);
   isDoneTodoList = selectedTodoList?.todoList.filter(t => t.isDone);
 
   const renderTodoList = list => {
     return list.map(todo => {
       return (
-        <TodoRow
+        <ToDoRow
           key={todo.index}
           selectedListId={selectedListId}
           todo={todo}
@@ -66,19 +71,21 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchS
     });
   };
 
-  const backgroundClass = chooseBackground(selectedListId === 'star' ? 'star-header' : selectedListId);
+  const backgroundClass = chooseBackground(selectedListId === IMPORTANT_ID ? IMPORTANT_HEADER_ID : selectedListId);
 
   return (
     <div className={styles.container}>
       {selectedListId !== 0 && (
         <>
-          {!searchState.isFocus && (
+          {selectedListId !== IMPORTANT_ID && (
             <header>
-              <h1 className={selectedListId === 'star' ? 'color-important' : 'color-white'}>{selectedTodoList.name}</h1>
+              <h1 className={selectedListId === IMPORTANT_ID ? 'color-important' : 'color-white'}>
+                {selectedTodoList.name}
+              </h1>
             </header>
           )}
 
-          {(selectedListId !== 'search' || !searchState.isEmpty) && (
+          {(selectedListId !== SEARCH_ID || !searchState.isEmpty) && (
             <article className={styles.todoContainer}>
               {showToDoListContextMenu && (
                 <TodoContextMenu
@@ -100,7 +107,7 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchS
             </article>
           )}
 
-          {!searchState.isFocus && selectedListId !== 'star' && (
+          {!searchState.isFocus && selectedListId !== IMPORTANT_ID && (
             <input placeholder="작업 추가" onKeyDown={handleKeydown} />
           )}
         </>

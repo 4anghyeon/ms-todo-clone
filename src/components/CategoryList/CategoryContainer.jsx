@@ -3,7 +3,21 @@ import style from './css/CategoryList.module.css';
 import common from './css/CategoryCommon.module.css';
 
 // 단순 목록 아이템
-const List = ({listId, category, handleChange, handleBlur, handleKeyDown}) => {
+const List = ({listId, category, handleChange, setCategoryMap}) => {
+  const handleBlur = event => {
+    setCategoryMap(prev => {
+      let newMap = new Map(prev);
+      let find = newMap.get(listId);
+      find.name = event.target.value;
+      if (find) find.isEdit = false;
+      return newMap;
+    });
+  };
+
+  const handleKeyDown = event => {
+    if (event.key === 'Enter') handleBlur(event);
+  };
+
   return (
     <>
       {category.isEdit ? (
@@ -23,14 +37,13 @@ const List = ({listId, category, handleChange, handleBlur, handleKeyDown}) => {
   );
 };
 
-// 그룹 아이템
-const Group = ({listId, group, category, handleChange, handleBlur, handleKeyDown}) => {
+// TODO: 그룹 아이템
+const Group = ({listId, group, category, handleKeyDown}) => {
   return (
     <React.Fragment>
       {category.isEdit ? (
         <div>
           <span className={style.icon}>📂</span>
-          <input id={`input_${listId}`} onChange={handleChange} onBlur={handleBlur} onKeyDown={handleKeyDown} />
         </div>
       ) : (
         <div>
@@ -40,6 +53,8 @@ const Group = ({listId, group, category, handleChange, handleBlur, handleKeyDown
     </React.Fragment>
   );
 };
+
+// 작업 추가 INPUT
 
 // MainContainer -> CategoryMainContainer -> CategoryListContainer -> CategoryContainer
 const CategoryContainer = ({
@@ -58,20 +73,6 @@ const CategoryContainer = ({
       target.closest('.list-item').classList.add(common.selected);
     } else target.classList.add(common.selected);
     setSelectedListId(listId);
-  };
-
-  const handleBlur = event => {
-    setCategoryMap(prev => {
-      let newMap = new Map(prev);
-      let find = newMap.get(listId);
-      find.name = event.target.value;
-      if (find) find.isEdit = false;
-      return newMap;
-    });
-  };
-
-  const handleKeyDown = event => {
-    if (event.key === 'Enter') handleBlur(event);
   };
 
   const handleLeftClick = event => {
@@ -93,15 +94,9 @@ const CategoryContainer = ({
   return (
     <li className={style.container + ' list-item'} onClick={handleLeftClick} onContextMenu={handleRightClick}>
       {category.group ? (
-        <Group
-          listId={listId}
-          group={category.group}
-          category={category}
-          handleBlur={handleBlur}
-          handleKeyDown={handleKeyDown}
-        />
+        <Group listId={listId} group={category.group} category={category} />
       ) : (
-        <List listId={listId} category={category} handleBlur={handleBlur} handleKeyDown={handleKeyDown} />
+        <List listId={listId} category={category} setCategoryMap={setCategoryMap} />
       )}
     </li>
   );

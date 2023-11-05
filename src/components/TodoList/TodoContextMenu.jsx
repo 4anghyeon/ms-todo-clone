@@ -46,11 +46,7 @@ const TodoContextMenu = ({selectedListId, setCategoryMap, contextInfo, setShowCo
     ['🗑️ 삭제', onClickDeleteTodo],
   ];
 
-  return (
-    <div className={style.contextMenuShadow + ' contextShadow'}>
-      <ContextMenu setShowContextMenu={setShowContextMenu} contextInfo={contextInfo} menuList={menuList} />
-    </div>
-  );
+  return <ContextMenu setShowContextMenu={setShowContextMenu} contextInfo={contextInfo} menuList={menuList} />;
 };
 
 export default TodoContextMenu;

@@ -2,8 +2,10 @@ import React from 'react';
 import style from './css/TodoRow.module.css';
 import style2 from './css/TodoListContainer.module.css';
 import {chooseBackground, chooseColor} from '../../helpers/util';
+import {IMPORTANT_HEADER_ID, IMPORTANT_ID, SEARCH_ID} from '../../helpers/common';
 
-const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowContextMenu, setContextInfo}) => {
+const ToDoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowContextMenu, setContextInfo}) => {
+  // 완료(isDone) 혹은 중요(star)를 toggle 한다.
   const toggleTodoAttribute = changeItem => {
     let find = categoryMap.get(todo.parentId);
     let obj = {};
@@ -26,12 +28,13 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
       }
     }
   };
+
   const handleClickCheckCircle = () => {
     toggleTodoAttribute('isDone');
   };
 
   const handleClickStar = event => {
-    toggleTodoAttribute('star');
+    toggleTodoAttribute(IMPORTANT_ID);
   };
 
   // 컨텍스트 메뉴 오픈
@@ -41,9 +44,8 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
     setContextInfo({listId: selectedListId, todo: todo, x: event.clientX, y: event.clientY});
   };
 
-  const backgroundClass = chooseBackground(selectedListId === 'star' ? 'star-header' : selectedListId);
+  const backgroundClass = chooseBackground(selectedListId === IMPORTANT_ID ? IMPORTANT_HEADER_ID : selectedListId);
   const colorClass = chooseColor(selectedListId);
-  console.log(colorClass);
 
   return (
     <div className={style.todo} onContextMenu={handleRightClick}>
@@ -56,7 +58,7 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
         ></div>
         <div className={style.todoContent}>
           <span>{todo.content}</span>
-          {(selectedListId === 'star' || selectedListId === 'search') && (
+          {(selectedListId === IMPORTANT_ID || selectedListId === SEARCH_ID) && (
             <span className={style2.subText}>{categoryMap.get(todo.parentId).name}</span>
           )}
         </div>
@@ -66,4 +68,4 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
   );
 };
 
-export default TodoRow;
+export default ToDoRow;

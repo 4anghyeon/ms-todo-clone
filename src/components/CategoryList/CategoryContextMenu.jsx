@@ -36,6 +36,8 @@ const CategoryContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu, s
       setCategoryMap(prev => {
         let newMap = new Map(prev);
         newMap.delete(listId);
+
+        // 목록을 삭제하고 현재 선택된 목록을 0으로 초기화 한다.
         setSelectedListId(0);
         return newMap;
       });
@@ -48,11 +50,7 @@ const CategoryContextMenu = ({setCategoryMap, contextInfo, setShowContextMenu, s
     ['🗑️ 삭제', onClickDeleteCategory],
   ];
 
-  return (
-    <div className={style.contextMenuShadow + ' contextShadow'}>
-      <ContextMenu setShowContextMenu={setShowContextMenu} contextInfo={contextInfo} menuList={menuList} />
-    </div>
-  );
+  return <ContextMenu setShowContextMenu={setShowContextMenu} contextInfo={contextInfo} menuList={menuList} />;
 };
 
 export default CategoryContextMenu;
