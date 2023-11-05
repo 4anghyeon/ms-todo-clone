@@ -9,7 +9,7 @@ const MainContainer = () => {
   const [selectedListId, setSelectedListId] = useState(0);
 
   return (
-    <div className={style.container}>
+    <div className={`${style.container} ${selectedListId === 'star' ? 'bg-important' : 'bg-normal'}`}>
       <CategoryMainContainer
         categoryList={categoryMap}
         setCategoryMap={setCategoryMap}

@@ -3,7 +3,7 @@ import style from './css/Todo.module.css';
 
 const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowContextMenu, setContextInfo}) => {
   const toggleTodoAttribute = changeItem => {
-    let find = categoryMap.get(selectedListId);
+    let find = categoryMap.get(todo.parentId);
     let obj = {};
     obj[changeItem] = null;
 
@@ -19,7 +19,7 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
         newTodoList.splice(findTodoIndex, 1, newTodo);
 
         let newMap = new Map(categoryMap);
-        newMap.get(selectedListId).todoList = newTodoList;
+        newMap.get(todo.parentId).todoList = newTodoList;
         setCategoryMap(newMap);
       }
     }
@@ -43,7 +43,9 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
     <div className={style.todo} onContextMenu={handleRightClick}>
       <div>
         <div
-          className={`${style.checkCircle} ${style.circle} ${todo.isDone && style.doneCircle}`}
+          className={`${style.checkCircle} ${style.circle} ${todo.isDone && style.doneCircle} ${
+            todo.isDone && (selectedListId === 'star' ? 'bg-important-100' : 'bg-normal')
+          }`}
           onClick={handleClickCheckCircle}
         ></div>
         <div className={style.todoContent}>
@@ -51,7 +53,12 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
           {selectedListId === 'star' && <span className={style.subText}>{categoryMap.get(todo.parentId).name}</span>}
         </div>
       </div>
-      <div onClick={handleClickStar} className={`${todo.star ? style.stared : style.star}`}></div>
+      <div
+        onClick={handleClickStar}
+        className={`${todo.star ? style.stared : style.star} ${
+          selectedListId === 'star' ? 'color-important' : 'color-normal'
+        }`}
+      ></div>
     </div>
   );
 };

@@ -6,7 +6,6 @@
     max-height: 800px;
     margin: 50px;
     border-radius: 15px;
-    background: #6377C7;
-    /*border: 1px solid #868e96;*/
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    transition: background-color 200ms;
 }

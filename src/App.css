@@ -16,6 +16,30 @@ li {
     list-style: none;
 }
 
+.bg-important {
+    background: #FFE4EA;
+}
+
+.bg-important-100 {
+    background: #AC395D !important;
+}
+
+.bg-normal {
+    background: #6377C7;
+}
+
+.color-white {
+    color: white;
+}
+
+.color-important {
+    color: #AC395D;
+}
+
+.color-normal {
+    color: #5C70BE;
+}
+
 @font-face {
     font-family: 'IBM Plex Sans KR';
     src: url('./assets/font/IBM Plex Sans KR/IBMPlexSansKR-Regular.ttf') format('truetype');

@@ -32,8 +32,8 @@ const StarCategoryContainer = ({setSelectedListId, categoryList}) => {
             <span className={common.count}>{staredCount || ''}</span>
           </div>
         </li>
-        <hr />
       </div>
+      <hr className={style.hr} />
     </React.Fragment>
   );
 };

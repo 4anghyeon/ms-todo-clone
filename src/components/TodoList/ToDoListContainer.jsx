@@ -62,7 +62,7 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap}) => {
       {selectedListId !== 0 && (
         <>
           <header>
-            <h1>{selectedTodoList.name}</h1>
+            <h1 className={selectedListId === 'star' ? 'color-important' : 'color-white'}>{selectedTodoList.name}</h1>
           </header>
           <article className={styles.todoContainer}>
             {showToDoListContextMenu && (
@@ -76,14 +76,18 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap}) => {
             <section className={`${styles.notDoneContainer}`}>{renderTodoList(todoList)}</section>
             {isDoneTodoList.length > 0 && (
               <>
-                <h3 className={styles.isDoneHeader}>완료됨</h3>
+                <h3
+                  className={`${styles.isDoneHeader} ${selectedListId === 'star' ? 'bg-important-100' : 'bg-normal'}`}
+                >
+                  완료됨
+                </h3>
                 <div className={`${styles.isDoneContainer}`}>
                   <section>{renderTodoList(isDoneTodoList)}</section>
                 </div>
               </>
             )}
           </article>
-          <input placeholder="작업 추가" onKeyDown={handleKeydown} />
+          {selectedListId !== 'star' && <input placeholder="작업 추가" onKeyDown={handleKeydown} />}
         </>
       )}
     </div>

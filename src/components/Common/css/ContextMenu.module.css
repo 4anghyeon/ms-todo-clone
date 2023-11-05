@@ -21,4 +21,5 @@
 .contextMenu li:hover {
     background: #1A83F0;
     color: white;
+    border-radius: 5px;
 }
