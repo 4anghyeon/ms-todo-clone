@@ -30,14 +30,15 @@
     align-items: center;
     width: 25px;
     height: 25px;
-    border: none;
     border-radius: 25px;
+    border: 1px solid #868e96 !important;
     cursor: pointer;
 }
 
 .checkCircle {
     background: white;
     color: white;
+
 }
 
 .doneCircle {

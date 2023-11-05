@@ -1,7 +1,7 @@
 import React from 'react';
-import style from './css/Todo.module.css';
+import style from './css/TodoRow.module.css';
 import style2 from './css/TodoListContainer.module.css';
-import {chooseBackground} from '../../helpers/util';
+import {chooseBackground, chooseColor} from '../../helpers/util';
 
 const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowContextMenu, setContextInfo}) => {
   const toggleTodoAttribute = changeItem => {
@@ -41,7 +41,9 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
     setContextInfo({listId: selectedListId, todo: todo, x: event.clientX, y: event.clientY});
   };
 
-  const backgroundClass = chooseBackground(selectedListId);
+  const backgroundClass = chooseBackground(selectedListId === 'star' ? 'star-header' : selectedListId);
+  const colorClass = chooseColor(selectedListId);
+  console.log(colorClass);
 
   return (
     <div className={style.todo} onContextMenu={handleRightClick}>
@@ -59,12 +61,7 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
           )}
         </div>
       </div>
-      <div
-        onClick={handleClickStar}
-        className={`${todo.star ? style.stared : style.star} ${
-          selectedListId === 'star' ? 'color-important' : 'color-normal'
-        }`}
-      ></div>
+      <div onClick={handleClickStar} className={`${todo.star ? style.stared : style.star} ${colorClass}`}></div>
     </div>
   );
 };

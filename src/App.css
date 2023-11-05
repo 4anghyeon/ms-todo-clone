@@ -44,6 +44,10 @@ li {
     color: #5C70BE;
 }
 
+.color-search {
+    color: #768490
+}
+
 @font-face {
     font-family: 'IBM Plex Sans KR';
     src: url('./assets/font/IBM Plex Sans KR/IBMPlexSansKR-Regular.ttf') format('truetype');

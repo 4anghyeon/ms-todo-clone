@@ -35,3 +35,16 @@ export const chooseBackground = id => {
       return 'bg-normal';
   }
 };
+
+export const chooseColor = id => {
+  switch (id) {
+    case 'star':
+      return 'color-important';
+    case 'star-header':
+      return 'color-important-100';
+    case 'search':
+      return 'color-search';
+    default:
+      return 'color-normal';
+  }
+};
