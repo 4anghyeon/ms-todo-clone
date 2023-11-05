@@ -14,3 +14,9 @@ li input {
 .icon {
     margin-right: 5px;
 }
+
+@media screen and (max-width: 768px) {
+    li {
+        user-select:none;
+    }
+}

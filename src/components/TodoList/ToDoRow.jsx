@@ -49,7 +49,7 @@ const ToDoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
   const colorClass = chooseColor(selectedListId);
 
   return (
-    <div className={style.todo} onContextMenu={handleRightClick}>
+    <div className={style.todo} onContextMenu={handleRightClick} onDoubleClick={handleRightClick}>
       <div>
         <div
           className={`${style.checkCircle} ${style.circle} ${todo.isDone && style.doneCircle} ${
