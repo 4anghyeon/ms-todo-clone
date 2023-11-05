@@ -42,7 +42,7 @@ const ToDoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
     event.preventDefault();
     setShowContextMenu(true);
     const rect = event.target.getBoundingClientRect();
-    setContextInfo({listId: selectedListId, todo: todo, x: event.clientX - rect.x / 2, y: event.clientY - rect.y / 3});
+    setContextInfo({listId: selectedListId, todo: todo, x: event.clientX - rect.x, y: event.clientY - rect.y / 3});
   };
 
   const backgroundClass = chooseBackground(selectedListId === IMPORTANT_ID ? IMPORTANT_HEADER_ID : selectedListId);

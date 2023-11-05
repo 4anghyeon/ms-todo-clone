@@ -89,11 +89,16 @@ const CategoryContainer = ({
     addSelectClass(event.target);
     setShowContextMenu(true);
     const rect = event.target.getBoundingClientRect();
-    setContextInfo({listId: listId, x: event.clientX - rect.x / 2, y: event.clientY - rect.y / 3});
+    setContextInfo({listId: listId, x: event.clientX - rect.x, y: event.clientY - rect.y / 3});
   };
 
   return (
-    <li className={style.container + ' list-item'} onClick={handleLeftClick} onContextMenu={handleRightClick}>
+    <li
+      className={style.container + ' list-item'}
+      onClick={handleLeftClick}
+      onContextMenu={handleRightClick}
+      onDoubleClick={handleRightClick}
+    >
       {category.group ? (
         <Group listId={listId} group={category.group} category={category} />
       ) : (
