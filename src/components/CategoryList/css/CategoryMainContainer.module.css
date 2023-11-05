@@ -6,7 +6,7 @@
     border-radius: 15px 0 0 15px;
     background: rgb(223, 224, 224);
     max-width: 70%;
-    transition: max-width .2s, overflow 0s;
+    transition: max-width .1s, overflow 0s;
     z-index: 2;
 }
 
