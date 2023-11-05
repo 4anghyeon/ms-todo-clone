@@ -20,7 +20,9 @@ const SearchMainContainer = ({setSearchState, setSelectedListId}) => {
   const onHandleChangeInput = event => {
     const value = event.target.value;
     setSearchState(prev => {
-      return {...prev, ...{isEmpty: value === '', keyword: value}};
+      const isEmpty = value === '';
+      if (!isEmpty) setSelectedListId(SEARCH_ID);
+      return {...prev, ...{isEmpty: isEmpty, keyword: value}};
     });
   };
 

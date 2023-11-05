@@ -89,7 +89,7 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchS
           {selectedListId !== IMPORTANT_ID && (
             <header>
               <h1 className={selectedListId === IMPORTANT_ID ? 'color-important' : 'color-white'}>
-                {selectedTodoList.name}
+                {selectedTodoList?.name}
               </h1>
             </header>
           )}
