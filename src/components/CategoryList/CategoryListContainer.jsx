@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import style from './css/CategoryListContainer.module.css';
 import CategoryContainer from './CategoryContainer';
 import CategoryContextMenu from './CategoryContextMenu';
+import common from './css/CategoryCommon.module.css';
 
 // MainContainer -> CategoryMainContainer -> CategoryListContainer
-const CategoryListContainer = ({categoryList, setCategoryMap, setSelectedListId}) => {
+const CategoryListContainer = ({categoryList, setCategoryMap, setSelectedListId, setSearchState}) => {
   const [showCategoryContextMenu, setShowCategoryContextMenu] = useState(false);
 
   // 컨텍스트 메뉴가 표시될 정보를 담은 state
@@ -34,6 +35,7 @@ const CategoryListContainer = ({categoryList, setCategoryMap, setSelectedListId}
               setShowContextMenu={setShowCategoryContextMenu}
               setContextInfo={setContextInfo}
               setSelectedListId={setSelectedListId}
+              setSearchState={setSearchState}
             />
           );
         })}

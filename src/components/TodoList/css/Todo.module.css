@@ -30,7 +30,7 @@
     align-items: center;
     width: 25px;
     height: 25px;
-    border: 1px solid lightgrey;
+    border: none;
     border-radius: 25px;
     cursor: pointer;
 }
@@ -58,9 +58,4 @@
 .stared::after {
     content: "★";
     font-size: 1.5rem;
-}
-
-.subText {
-    font-size: 12px;
-    color: #767678;
 }

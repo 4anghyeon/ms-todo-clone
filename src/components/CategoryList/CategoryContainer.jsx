@@ -49,6 +49,7 @@ const CategoryContainer = ({
   setShowContextMenu,
   setContextInfo,
   setSelectedListId,
+  setSearchState,
 }) => {
   // 선택된 요소에 클래스 추가
   const addSelectClass = target => {
@@ -75,6 +76,10 @@ const CategoryContainer = ({
 
   const handleLeftClick = event => {
     addSelectClass(event.target);
+    document.querySelector(`.${common.selectedBlur}`)?.classList.remove(common.selectedBlur);
+    setSearchState(prev => {
+      return {...prev, isFocus: false};
+    });
   };
 
   // 컨텍스트 메뉴 오픈

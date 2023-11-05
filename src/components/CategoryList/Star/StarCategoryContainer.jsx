@@ -2,7 +2,7 @@ import React from 'react';
 import style from './css/StarCategoryContainer.module.css';
 import common from '../css/CategoryCommon.module.css';
 
-const StarCategoryContainer = ({setSelectedListId, categoryList}) => {
+const StarCategoryContainer = ({setSelectedListId, categoryList, setSearchState}) => {
   const addSelectClass = target => {
     document.querySelectorAll('.list-item').forEach(elem => elem.classList.remove(common.selected));
     if (target.tagName !== 'LI') {
@@ -13,6 +13,10 @@ const StarCategoryContainer = ({setSelectedListId, categoryList}) => {
 
   const handleLeftClick = event => {
     addSelectClass(event.target);
+    document.querySelector(`.${common.selectedBlur}`)?.classList.remove(common.selectedBlur);
+    setSearchState(prev => {
+      return {...prev, isFocus: false};
+    });
   };
 
   let staredCount = [...categoryList.values()]
@@ -22,7 +26,7 @@ const StarCategoryContainer = ({setSelectedListId, categoryList}) => {
 
   return (
     <React.Fragment>
-      <div onClick={handleLeftClick} className={`${style.container}`}>
+      <ul onClick={handleLeftClick} className={`${style.container}`}>
         <li className={`list-item`}>
           <div className={style.spaceBetween}>
             <div>
@@ -32,7 +36,7 @@ const StarCategoryContainer = ({setSelectedListId, categoryList}) => {
             <span className={common.count}>{staredCount || ''}</span>
           </div>
         </li>
-      </div>
+      </ul>
       <hr className={style.hr} />
     </React.Fragment>
   );

@@ -1,5 +1,7 @@
 import React from 'react';
 import style from './css/Todo.module.css';
+import style2 from './css/TodoListContainer.module.css';
+import {chooseBackground} from '../../helpers/util';
 
 const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowContextMenu, setContextInfo}) => {
   const toggleTodoAttribute = changeItem => {
@@ -39,18 +41,22 @@ const TodoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
     setContextInfo({listId: selectedListId, todo: todo, x: event.clientX, y: event.clientY});
   };
 
+  const backgroundClass = chooseBackground(selectedListId);
+
   return (
     <div className={style.todo} onContextMenu={handleRightClick}>
       <div>
         <div
           className={`${style.checkCircle} ${style.circle} ${todo.isDone && style.doneCircle} ${
-            todo.isDone && (selectedListId === 'star' ? 'bg-important-100' : 'bg-normal')
+            todo.isDone && backgroundClass
           }`}
           onClick={handleClickCheckCircle}
         ></div>
         <div className={style.todoContent}>
           <span>{todo.content}</span>
-          {selectedListId === 'star' && <span className={style.subText}>{categoryMap.get(todo.parentId).name}</span>}
+          {(selectedListId === 'star' || selectedListId === 'search') && (
+            <span className={style2.subText}>{categoryMap.get(todo.parentId).name}</span>
+          )}
         </div>
       </div>
       <div

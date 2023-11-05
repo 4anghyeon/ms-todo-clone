@@ -40,11 +40,16 @@
     justify-content: start;
 }
 
-.isDoneContainer span {
+.isDoneContainer span:not(.subText) {
     display: flex;
     flex-direction: column;
     justify-content: start;
     text-decoration: line-through;
+}
+
+.subText {
+    font-size: 12px;
+    color: #767678;
 }
 
 .isDoneHeader {

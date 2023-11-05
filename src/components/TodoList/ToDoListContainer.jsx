@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import styles from './css/TodoListContainer.module.css';
 import TodoRow from './TodoRow';
-import {Category, Todo} from '../../helpers/util';
+import {Category, chooseBackground, Todo} from '../../helpers/util';
 import TodoContextMenu from './TodoContextMenu';
 
-const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap}) => {
+const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchState}) => {
   const [showToDoListContextMenu, setShowToDoListContextMenu] = useState(false);
   const [contextInfo, setContextInfo] = useState({x: 0, y: 0});
 
@@ -31,8 +31,17 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap}) => {
 
   let todoList = [];
   let isDoneTodoList = [];
-
-  if (selectedListId === 'star') {
+  console.log(searchState);
+  if (searchState.isFocus && !searchState.isEmpty) {
+    selectedTodoList = new Category('검색 결과', null);
+    console.log('here');
+    for (const category of categoryMap.values()) {
+      selectedTodoList.todoList = [
+        ...selectedTodoList.todoList,
+        ...category.todoList.filter(t => t.content.includes(searchState.keyword)),
+      ];
+    }
+  } else if (selectedListId === 'star') {
     selectedTodoList = new Category('중요', null);
     for (const category of categoryMap.values()) {
       selectedTodoList.todoList = [...selectedTodoList.todoList, ...category.todoList.filter(t => t.star)];
@@ -57,37 +66,43 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap}) => {
     });
   };
 
+  const backgroundClass = chooseBackground(selectedListId === 'star' ? 'star-header' : selectedListId);
+
   return (
     <div className={styles.container}>
       {selectedListId !== 0 && (
         <>
-          <header>
-            <h1 className={selectedListId === 'star' ? 'color-important' : 'color-white'}>{selectedTodoList.name}</h1>
-          </header>
-          <article className={styles.todoContainer}>
-            {showToDoListContextMenu && (
-              <TodoContextMenu
-                selectedListId={selectedListId}
-                setCategoryMap={setCategoryMap}
-                setShowContextMenu={setShowToDoListContextMenu}
-                contextInfo={contextInfo}
-              />
-            )}
-            <section className={`${styles.notDoneContainer}`}>{renderTodoList(todoList)}</section>
-            {isDoneTodoList.length > 0 && (
-              <>
-                <h3
-                  className={`${styles.isDoneHeader} ${selectedListId === 'star' ? 'bg-important-100' : 'bg-normal'}`}
-                >
-                  완료됨
-                </h3>
-                <div className={`${styles.isDoneContainer}`}>
-                  <section>{renderTodoList(isDoneTodoList)}</section>
-                </div>
-              </>
-            )}
-          </article>
-          {selectedListId !== 'star' && <input placeholder="작업 추가" onKeyDown={handleKeydown} />}
+          {!searchState.isFocus && (
+            <header>
+              <h1 className={selectedListId === 'star' ? 'color-important' : 'color-white'}>{selectedTodoList.name}</h1>
+            </header>
+          )}
+
+          {(selectedListId !== 'search' || !searchState.isEmpty) && (
+            <article className={styles.todoContainer}>
+              {showToDoListContextMenu && (
+                <TodoContextMenu
+                  selectedListId={selectedListId}
+                  setCategoryMap={setCategoryMap}
+                  setShowContextMenu={setShowToDoListContextMenu}
+                  contextInfo={contextInfo}
+                />
+              )}
+              <section className={`${styles.notDoneContainer}`}>{renderTodoList(todoList)}</section>
+              {isDoneTodoList.length > 0 && (
+                <>
+                  <h3 className={`${styles.isDoneHeader} ${backgroundClass}`}>완료됨</h3>
+                  <div className={`${styles.isDoneContainer}`}>
+                    <section>{renderTodoList(isDoneTodoList)}</section>
+                  </div>
+                </>
+              )}
+            </article>
+          )}
+
+          {!searchState.isFocus && selectedListId !== 'star' && (
+            <input placeholder="작업 추가" onKeyDown={handleKeydown} />
+          )}
         </>
       )}
     </div>

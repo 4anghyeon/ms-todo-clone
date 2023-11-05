@@ -1,5 +1,9 @@
 .selected {
-    background: #adb5bd;
+    background: #CFD0D0;
+}
+
+.selectedBlur {
+    background: #D4D4D5 !important;
 }
 
 .count {

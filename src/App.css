@@ -17,7 +17,7 @@ li {
 }
 
 .bg-important {
-    background: #FFE4EA;
+    background: #FFE4EA !important;
 }
 
 .bg-important-100 {
@@ -26,6 +26,10 @@ li {
 
 .bg-normal {
     background: #6377C7;
+}
+
+.bg-search {
+    background: #768490 !important  ;
 }
 
 .color-white {

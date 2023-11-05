@@ -22,3 +22,16 @@ export class Category {
     this.todoList = [];
   }
 }
+
+export const chooseBackground = id => {
+  switch (id) {
+    case 'star':
+      return 'bg-important';
+    case 'star-header':
+      return 'bg-important-100';
+    case 'search':
+      return 'bg-search';
+    default:
+      return 'bg-normal';
+  }
+};
