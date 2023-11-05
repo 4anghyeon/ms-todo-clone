@@ -4,6 +4,8 @@ import ToDoRow from './ToDoRow';
 import {chooseBackground} from '../../helpers/util';
 import TodoContextMenu from './TodoContextMenu';
 import {Category, IMPORTANT_HEADER_ID, IMPORTANT_ID, SEARCH_ID, Todo} from '../../helpers/common';
+import common from '../CategoryList/css/CategoryCommon.module.css';
+import categoryMain from '../CategoryList/css/CategoryMainContainer.module.css';
 
 const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchState}) => {
   const [showToDoListContextMenu, setShowToDoListContextMenu] = useState(false);
@@ -71,10 +73,17 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchS
     });
   };
 
+  const onHandleShowMenu = () => {
+    document.querySelector(`.${categoryMain.container}`).classList.add(common.show);
+  };
+
   const backgroundClass = chooseBackground(selectedListId === IMPORTANT_ID ? IMPORTANT_HEADER_ID : selectedListId);
 
   return (
     <div className={styles.container}>
+      <button className={common.showMenuButton} onClick={onHandleShowMenu}>
+        ➡️
+      </button>
       {selectedListId !== 0 && (
         <>
           {selectedListId !== IMPORTANT_ID && (

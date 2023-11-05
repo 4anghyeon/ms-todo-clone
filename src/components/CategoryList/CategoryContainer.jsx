@@ -88,7 +88,8 @@ const CategoryContainer = ({
     event.preventDefault();
     addSelectClass(event.target);
     setShowContextMenu(true);
-    setContextInfo({listId: listId, x: event.clientX, y: event.clientY});
+    const rect = event.target.getBoundingClientRect();
+    setContextInfo({listId: listId, x: event.clientX - rect.x / 2, y: event.clientY - rect.y / 3});
   };
 
   return (

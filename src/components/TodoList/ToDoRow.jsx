@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './css/TodoRow.module.css';
 import style2 from './css/TodoListContainer.module.css';
-import {chooseBackground, chooseColor} from '../../helpers/util';
+import {chooseBackground, chooseColor, LongTouchEvent} from '../../helpers/util';
 import {IMPORTANT_HEADER_ID, IMPORTANT_ID, SEARCH_ID} from '../../helpers/common';
 
 const ToDoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowContextMenu, setContextInfo}) => {
@@ -41,7 +41,8 @@ const ToDoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowCont
   const handleRightClick = event => {
     event.preventDefault();
     setShowContextMenu(true);
-    setContextInfo({listId: selectedListId, todo: todo, x: event.clientX, y: event.clientY});
+    const rect = event.target.getBoundingClientRect();
+    setContextInfo({listId: selectedListId, todo: todo, x: event.clientX - rect.x / 2, y: event.clientY - rect.y / 3});
   };
 
   const backgroundClass = chooseBackground(selectedListId === IMPORTANT_ID ? IMPORTANT_HEADER_ID : selectedListId);

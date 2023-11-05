@@ -8,10 +8,11 @@ const MainContainer = () => {
   const LOCALSTORAGE_KEY = 'to-do-app-data';
 
   // 데이터의 모든 것. TODO: 이렇게 관리해도 될까..?
-  const [categoryMap, setCategoryMap] = useState(new Map(JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY))));
+  const localData = new Map(JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)));
+  const [categoryMap, setCategoryMap] = useState(localData);
 
   // 현재 선택된 목록 ID
-  const [selectedListId, setSelectedListId] = useState(0);
+  const [selectedListId, setSelectedListId] = useState(localData.keys().next().value ?? 0);
 
   // 검색 정보
   const [searchState, setSearchState] = useState({isFocus: false, isEmpty: true, keyword: ''});

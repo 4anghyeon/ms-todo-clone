@@ -24,10 +24,15 @@ const SearchMainContainer = ({setSearchState, setSelectedListId}) => {
     });
   };
 
+  const onHandleHideMenu = () => {
+    document.querySelector(`.${style.container}`).parentElement.classList.remove(common.show);
+  };
+
   return (
     <div className={style.container}>
       <span className={style.icon}>🔍</span>
       <input placeholder="검색" spellCheck={'false'} onFocus={onHandleFocusInput} onChange={onHandleChangeInput} />
+      <button className={common.hideMenuButton} onClick={onHandleHideMenu}>{`⬅️`}</button>
     </div>
   );
 };
