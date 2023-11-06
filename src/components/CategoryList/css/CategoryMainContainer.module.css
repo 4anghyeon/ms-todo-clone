@@ -17,5 +17,6 @@
         width: 50vw;
         max-width: 0;
         overflow: hidden;
+        border-radius: 0 10px 10px 0;
     }
 }

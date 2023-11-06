@@ -16,7 +16,8 @@ npm run start
 
 ## 주요 기능
 ### To Do Category
-![](./public/help/usage1.gif)
+<img src="./public/help/usage1.gif" width="600" />
+
 - 오른쪽 클릭, 혹은 더블 클릭으로 Context Menu 오픈
 - 목록 메뉴 추가
 - 목록 메뉴 이름 변경
@@ -30,12 +31,18 @@ npm run start
 - To Do 중요 표시
 
 ### 중요
-![](./public/help/usage3.png)
+<img src="./public/help/usage3.png" width="600" />
+
 - To Do 목록 중 중요로 체크 한 것을 모아 봄
 
 ### 검색
 ![](./public/help/usage4.gif)
 - 모든 목록 중 입력 키워드의 To Do를 검색
+
+### 반응형
+<img src="./public/help/usage5.gif" height="300" />
+
+- 반응형으로 모바일 환경에서 접속시 메뉴를 열고 닫게 하는 기능 추가
 
 # 분리 컴포넌트
 ## `ContextMenu.jsx`
