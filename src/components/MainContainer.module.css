@@ -10,3 +10,12 @@
     transition: background-color 200ms;
     position: relative;
 }
+
+@media screen and (max-width: 768px) {
+    .container {
+        margin: 0;
+        border-radius: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+}

@@ -1,34 +1,9 @@
 import style from './css/TodoListContainer.module.css';
 import React from 'react';
 import ContextMenu from '../Common/ContextMenu';
+import {IMPORTANT_ID} from '../../helpers/common';
 
-const TodoContextMenu = ({selectedListId, setCategoryMap, contextInfo, setShowContextMenu}) => {
-  const onClickChangeName = () => {
-    // 이름 변경을 하면 해당 목록 밑에 숨겨져 있던 input이 드러나게 한다.
-    setCategoryMap(prev => {
-      let newMap = new Map(prev);
-      for (const element of newMap.values()) {
-        element.isEdit = false;
-      }
-
-      let find = newMap.get(selectedListId);
-
-      if (find) {
-        find.isEdit = true;
-        document.querySelectorAll('.list-item').forEach(elem => elem.classList.remove(style.selected));
-
-        // input이 표시된 후 focus해야 하기 때문에 어쩔 수 없이 setTimeout걸음
-        setTimeout(() => {
-          const inputElem = document.getElementById(`input_${selectedListId}`);
-          inputElem.value = find.name;
-          inputElem.focus();
-        });
-      }
-      return newMap;
-    });
-    setShowContextMenu(false);
-  };
-
+const TodoContextMenu = ({selectedListId, setCategoryMap, contextInfo, setShowContextMenu, toggleTodoAttribute}) => {
   const onClickDeleteTodo = () => {
     if (window.confirm('해당 할 일이 영구적으로 삭제됩니다.')) {
       setCategoryMap(prev => {
@@ -42,7 +17,14 @@ const TodoContextMenu = ({selectedListId, setCategoryMap, contextInfo, setShowCo
   };
 
   const menuList = [
-    ['⭐️ 중요로 표시', onClickChangeName],
+    [
+      '️✅ 완료로 표시',
+      toggleTodoAttribute.bind(null, `isDone`, contextInfo.todo, setShowContextMenu.bind(null, false)),
+    ],
+    [
+      '⭐️ 중요로 표시',
+      toggleTodoAttribute.bind(null, IMPORTANT_ID, contextInfo.todo, setShowContextMenu.bind(null, false)),
+    ],
     ['🗑️ 삭제', onClickDeleteTodo],
   ];
 

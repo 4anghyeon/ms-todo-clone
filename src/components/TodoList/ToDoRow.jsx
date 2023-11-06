@@ -4,37 +4,15 @@ import style2 from './css/TodoListContainer.module.css';
 import {chooseBackground, chooseColor, LongTouchEvent} from '../../helpers/util';
 import {IMPORTANT_HEADER_ID, IMPORTANT_ID, SEARCH_ID} from '../../helpers/common';
 
-const ToDoRow = ({categoryMap, selectedListId, todo, setCategoryMap, setShowContextMenu, setContextInfo}) => {
+const ToDoRow = ({categoryMap, selectedListId, todo, toggleTodoAttribute, setShowContextMenu, setContextInfo}) => {
   // 완료(isDone) 혹은 중요(star)를 toggle 한다.
-  const toggleTodoAttribute = changeItem => {
-    let find = categoryMap.get(todo.parentId);
-    let obj = {};
-    obj[changeItem] = null;
-
-    if (find) {
-      let findTodoIndex = find.todoList.findIndex(t => t.index === todo.index);
-      if (findTodoIndex !== -1) {
-        let findTodo = find.todoList[findTodoIndex];
-        obj[changeItem] = !findTodo[changeItem];
-        let newTodo = {...findTodo, ...obj};
-
-        // todoList의 todo를 새 todo로 교체!
-        let newTodoList = [...find.todoList];
-        newTodoList.splice(findTodoIndex, 1, newTodo);
-
-        let newMap = new Map(categoryMap);
-        newMap.get(todo.parentId).todoList = newTodoList;
-        setCategoryMap(newMap);
-      }
-    }
-  };
 
   const handleClickCheckCircle = () => {
-    toggleTodoAttribute('isDone');
+    toggleTodoAttribute('isDone', todo);
   };
 
   const handleClickStar = event => {
-    toggleTodoAttribute(IMPORTANT_ID);
+    toggleTodoAttribute(IMPORTANT_ID, todo);
   };
 
   // 컨텍스트 메뉴 오픈
