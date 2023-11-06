@@ -17,7 +17,10 @@ const CategoryButtonContainer = ({setCategoryMap}) => {
       if (filtered.length > 0) {
         index += +filtered[filtered.length - 1].name.replace(defaultName, '') + 1 || 1;
       }
-      newMap.set(uuidv4(), new Category(`${defaultName} ${index === 0 ? '' : index}`, isGroup ? new Group() : null));
+      newMap.set(
+        uuidv4(),
+        new Category(`${defaultName} ${index === 0 ? '' : index}`.trim(), isGroup ? new Group() : null),
+      );
 
       return newMap;
     });

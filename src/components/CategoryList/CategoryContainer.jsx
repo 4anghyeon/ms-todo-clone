@@ -86,6 +86,7 @@ const CategoryContainer = ({
   // 컨텍스트 메뉴 오픈
   const handleRightClick = event => {
     event.preventDefault();
+    if (event.target.tagName === 'INPUT') return;
     addSelectClass(event.target);
     setShowContextMenu(true);
     const rect = event.target.getBoundingClientRect();
