@@ -1,42 +1,17 @@
 import React, {useState} from 'react';
 import styles from './css/TodoListContainer.module.css';
-import ToDoRow from './ToDoRow';
 import {chooseBackground} from '../../helpers/util';
 import TodoContextMenu from './TodoContextMenu';
 import {Category, IMPORTANT_HEADER_ID, IMPORTANT_ID, SEARCH_ID, Todo} from '../../helpers/common';
 import common from '../CategoryList/css/CategoryCommon.module.css';
 import categoryMain from '../CategoryList/css/CategoryMainContainer.module.css';
+import ToDoList from './ToDoList';
 
 const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchState}) => {
   const [showToDoListContextMenu, setShowToDoListContextMenu] = useState(false);
   const [contextInfo, setContextInfo] = useState({x: 0, y: 0});
 
   let selectedTodoList = categoryMap.get(selectedListId);
-
-  const toggleTodoAttribute = (changeItem, todo, cb) => {
-    let find = categoryMap.get(todo.parentId);
-    let obj = {};
-    obj[changeItem] = null;
-
-    if (find) {
-      let findTodoIndex = find.todoList.findIndex(t => t.index === todo.index);
-      if (findTodoIndex !== -1) {
-        let findTodo = find.todoList[findTodoIndex];
-        obj[changeItem] = !findTodo[changeItem];
-        let newTodo = {...findTodo, ...obj};
-
-        // todoList의 todo를 새 todo로 교체!
-        let newTodoList = [...find.todoList];
-        newTodoList.splice(findTodoIndex, 1, newTodo);
-
-        let newMap = new Map(categoryMap);
-        newMap.get(todo.parentId).todoList = newTodoList;
-        setCategoryMap(newMap);
-      }
-
-      if (cb) cb();
-    }
-  };
 
   // 작업 입력 이벤트
   const handleKeydown = event => {
@@ -82,23 +57,6 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchS
   todoList = selectedTodoList?.todoList.filter(t => !t.isDone);
   isDoneTodoList = selectedTodoList?.todoList.filter(t => t.isDone);
 
-  const renderTodoList = list => {
-    return list.map(todo => {
-      return (
-        <ToDoRow
-          key={todo.index}
-          selectedListId={selectedListId}
-          todo={todo}
-          categoryMap={categoryMap}
-          setCategoryMap={setCategoryMap}
-          setShowContextMenu={setShowToDoListContextMenu}
-          setContextInfo={setContextInfo}
-          toggleTodoAttribute={toggleTodoAttribute}
-        />
-      );
-    });
-  };
-
   const onHandleShowMenu = () => {
     document.querySelector(`.${categoryMain.container}`).classList.add(common.show);
   };
@@ -128,16 +86,31 @@ const ToDoListContainer = ({categoryMap, selectedListId, setCategoryMap, searchS
                   setCategoryMap={setCategoryMap}
                   setShowContextMenu={setShowToDoListContextMenu}
                   contextInfo={contextInfo}
-                  toggleTodoAttribute={toggleTodoAttribute}
                 />
               )}
-              <section className={`${styles.notDoneContainer}`}>{renderTodoList(todoList)}</section>
+              <section className={`${styles.notDoneContainer}`}>
+                <ToDoList
+                  list={todoList}
+                  selectedListId={selectedListId}
+                  categoryMap={categoryMap}
+                  setCategoryMap={setCategoryMap}
+                  setShowToDoListContextMenu={setShowToDoListContextMenu}
+                  setContextInfo={setContextInfo}
+                />
+              </section>
               {isDoneTodoList.length > 0 && (
                 <>
                   <h3 className={`${styles.isDoneHeader} ${backgroundClass}`}>완료됨</h3>
-                  <div className={`${styles.isDoneContainer}`}>
-                    <section>{renderTodoList(isDoneTodoList)}</section>
-                  </div>
+                  <section className={`${styles.isDoneContainer}`}>
+                    <ToDoList
+                      list={isDoneTodoList}
+                      selectedListId={selectedListId}
+                      categoryMap={categoryMap}
+                      setCategoryMap={setCategoryMap}
+                      setShowToDoListContextMenu={setShowToDoListContextMenu}
+                      setContextInfo={setContextInfo}
+                    />
+                  </section>
                 </>
               )}
             </article>
